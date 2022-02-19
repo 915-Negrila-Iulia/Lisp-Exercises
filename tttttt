@@ -1,0 +1,74 @@
+(defun lista(l n)
+  (cond
+      ((and (= n 0) (atom l)) (list l))
+      ((= n 0) nil)
+      ((atom l) nil)
+      (t (mapcan #'(lambda(l)(lista l (- n 1))) l))
+   )
+)
+
+(defun mainL(l n)
+  (lista l (+ n 1))
+)
+
+(defun exists(l e)
+  (cond 
+      ((and (atom l) (equal e l)) t)
+      ((atom l) nil)
+      (t (SOME #'IDENTITY (MAPCAR #'(lambda(l)(exists l e)) l)))
+   )
+)
+
+(defun depth(l)
+  (cond
+      ((atom l) 0)
+      ((null (cdr l)) 0)
+      (t (+ 1 (apply #'max(mapcar #'depth (cdr l)))))
+   )
+)
+
+(defun EXI(l e n)
+  (exists (mainL l n) e)
+)
+
+(defun sol(l e n)
+  (cond
+      ((= n 0) nil)
+      ((and (= (mod n 2) 0)(exists (mainL l n) e)) t)
+      (t (sol l e (- n 1)))
+   )
+)
+
+(defun func(l n)
+  (cond
+      ((and (= (mod n 2) 0) (atom l)) (list 0))
+      ((= n 0) nil)
+      ((atom l) (list l))
+      (t (list(mapcan #'(lambda(l)(modify l (- n 1))) l)))
+   )
+)
+
+(defun dd(l)
+  (- (depth l) 1)
+)
+
+(defun fmain(l)
+  (func l (- (depth l) 1))
+)
+
+(defun modify(l k)
+  (cond
+      ((and (= k 0)(atom l)) (list 0))
+      ((atom l) (list l))
+      (t (list(mapcan #'(lambda(l)(modify l (- k 1))) l)))
+   )
+)
+
+(defun height(l nod col)
+  (cond
+      ((and (atom l) (equal nod l)) col)
+      ((atom l) 0)
+      ((null (cdr l)) 0)
+      (t (mapcar #'(lambda(l)(height (cdr l) nod (+ col 1))) l))
+   )
+)

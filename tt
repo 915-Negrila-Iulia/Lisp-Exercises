@@ -1,0 +1,107 @@
+(defun sum4 (l)
+  (cond
+      ((null l) 0)
+      ((numberp (car l)) (+ (car l) (sum4 (cdr l))))
+      ((listp (car l)) (+ (sum4 (car l)) (sum4 (cdr l))))
+      (t (sum4 (cdr l)))
+  )
+)
+
+(defun addEnd(e l)
+  (cond
+      ((null l) (list e))
+      (t (cons (car l) (addEnd e (cdr l))))
+  )
+)
+
+(defun reverse4(l)
+  (cond
+      ((null l) nil)
+      (t (append (reverse4 (cdr l)) (list (car l))))
+  )
+)
+
+(defun reverseCol(l col)
+  (cond
+      ((null l) col)
+      (t (reverseCol (cdr l) (cons (car l) col)))
+  )
+)
+
+(defun reverseMain(l)
+  (reverseCol l nil)
+)
+
+(defun pairListCol(e l col)
+  (cond
+      ((null l) col)
+      (t (pairlistCol e (cdr l) (cons (list e (car l)) col)))
+  )
+)
+
+(defun pairListMain(e l)
+  (pairListCol e l nil)
+)
+
+(defun pairList(e l)
+  (cond
+      ((null l) nil)
+      (t (cons (list e (car l)) (pairList e (cdr l))))
+  )
+)
+
+(defun pairCondList(e l)
+  (cond
+      ((null l) nil)
+      ((< e (car l)) (cons (list e (car l)) (pairCondList e (cdr l))))
+      (t (pairCondList e (cdr l)))
+  )
+)
+
+(defun pairElems(l)
+  (cond
+     ((null l) nil)
+     (t (append (pairCondList (car l) (cdr l)) (pairElems (cdr l))))
+  )
+)
+
+(defun doubleNum(l)
+  (cond 
+      ((null l) nil)
+      ((numberp (car l)) (cons (* 2 (car l)) (doubleNum (cdr l))))
+      ((atom (car l)) (cons (car l) (doubleNum (cdr l))))
+      (t (cons (doubleNum (car l)) (doubleNum (cdr l))))
+  )
+)
+
+(defun dublare(l)
+  (cond
+      ((numberp l) (* 2 l))
+      ((atom l) l)
+      (t (cons (dublare (car l)) (dublare (cdr l))))
+  )
+)
+
+(defun firstAtomSurface(l)
+  (cond
+     ((null l) nil)
+     ((atom (car l)) (car l))
+     (t (firstAtomSurface (cdr l)))
+  )
+)
+
+(defun firstAtomAnyLvL(l)
+  (cond
+     ((null l) nil)
+     ((atom (car l)) (car l))
+     (t (firstAtomAnyLvL (car l)))
+  )
+)
+
+(defun sumOfn(n l)
+  (cond
+      ((null l) 0)
+      ((= n 0) 0)
+      (t (+ (car l) (sumOfn (- n 1) (cdr l))))
+   )
+)
